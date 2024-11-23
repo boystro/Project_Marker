@@ -1,6 +1,6 @@
 import './assets/main.css'
 import 'primeicons/primeicons.css'
-import 'primeflex/primeflex.css'
+import 'primeflex/primeflex.min.css'
 
 import { createApp } from 'vue'
 import PrimeVue, { type PrimeVueConfiguration } from 'primevue/config'
