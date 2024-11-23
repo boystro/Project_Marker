@@ -95,7 +95,7 @@ const editValues = ref([
           <TimeComponent :time="currentTime" :time-style="dateTimeConfigService.timeStyle.value"
             :hour12="dateTimeConfigService.hour12.value"></TimeComponent>
         </div>
-        <div class="date" style="color: var(--p-primary-400);">
+        <div class="date">
           <DateComponent :date="currentTime" :date-style="dateTimeConfigService.dateStyle.value"></DateComponent>
         </div>
       </div>
@@ -108,11 +108,14 @@ const editValues = ref([
   <!-- Time Edit Dialog Box -->
   <Dialog v-model:visible="editTimeDialogVisible" modal header="Edit Time" :style="{ width: '25rem' }"
     :draggable="false">
-    <TimeComponent :time="currentTime" :time-style="editTimeStyle" :hour12="editHour12">
-    </TimeComponent>
+
+    <div class="time">
+      <TimeComponent :time="currentTime" :time-style="editTimeStyle" :hour12="editHour12">
+      </TimeComponent>
+    </div>
 
     <template #footer>
-      <div class="w-full flex flex-column gap-2">
+      <div class="w-full flex flex-column gap-3">
 
         <div class="flex gap-2 align-items-center">
           <Checkbox input-id="cb-h12" v-model="editHour12" binary></Checkbox>
@@ -126,7 +129,7 @@ const editValues = ref([
             <label for="select-time-edit">Select Time Format</label>
           </FloatLabel>
 
-          <Button label="Save" icon="pi pi-check" iconPos="right" v-on:click="saveTimeConfig"></Button>
+          <Button label="Save" icon="pi pi-check" iconPos="right" @click="saveTimeConfig"></Button>
         </div>
       </div>
     </template>
@@ -136,15 +139,19 @@ const editValues = ref([
   <Dialog v-model:visible="editDateDialogVisible" modal header="Edit Date" :style="{ width: '25rem' }"
     :draggable="false">
 
-    <DateComponent :date="currentTime" :date-style="editDateStyle"></DateComponent>
+    <div class="date">
+      <DateComponent :date="currentTime" :date-style="editDateStyle"></DateComponent>
+    </div>
 
     <template #footer>
-      <FloatLabel class="flex-1" variant="in">
-        <Select input-id="select-date-edit" v-model="editDateStyle" :options="editValues" optionLabel="name"
-          option-value="code" fluid autofocus></Select>
-        <label for="select-date-edit">Select Date Format</label>
-      </FloatLabel>
-      <Button label="Save" icon="pi pi-check" iconPos="right" v-on:click="saveDateConfig"></Button>
+      <div class="flex gap-3 w-full">
+        <FloatLabel class="flex-1" variant="in">
+          <Select input-id="select-date-edit" v-model="editDateStyle" :options="editValues" optionLabel="name"
+            option-value="code" fluid autofocus></Select>
+          <label for="select-date-edit">Select Date Format</label>
+        </FloatLabel>
+        <Button label="Save" icon="pi pi-check" iconPos="right" @click="saveDateConfig"></Button>
+      </div>
     </template>
   </Dialog>
 </template>
@@ -152,6 +159,7 @@ const editValues = ref([
 <style scoped lang="scss">
 #dt-card {
   width: fit-content;
+  cursor: default;
 }
 
 .time {
@@ -164,5 +172,6 @@ const editValues = ref([
   font-size: 1.2em;
   text-align: center;
   font-weight: 200;
+  color: var(--p-surface-400);
 }
 </style>
