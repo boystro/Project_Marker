@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { InputText, IconField, InputIcon, Message, Tag } from 'primevue'
+import { InputText, IconField, InputIcon, Message } from 'primevue'
 
 const searchVal = ref('')
 

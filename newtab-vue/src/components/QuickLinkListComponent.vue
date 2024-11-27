@@ -13,6 +13,7 @@ const quickLinkConfigService = inject<QuickLinkConfigService>('quickLinkConfigSe
       v-for="item in quickLinkConfigService.links.value"
       :key="item.url"
       :quick-link="item"
+      @delete-link="quickLinkConfigService.deleteLink(item)"
     />
   </div>
 </template>

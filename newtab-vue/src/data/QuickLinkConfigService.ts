@@ -2,7 +2,7 @@ import type { QuickLinkType } from '@/types/QuickLinkType'
 import { ref, watch, type Ref } from 'vue'
 
 export default class QuickLinkConfigService {
-  constructor() {
+  public constructor() {
     const storageLinks = localStorage.getItem('links')
     if (storageLinks != null) {
       const parsedLinks = JSON.parse(storageLinks) as QuickLinkType[]
@@ -12,11 +12,17 @@ export default class QuickLinkConfigService {
     watch(this.links, this._linksWatcher)
   }
 
-  links: Ref<QuickLinkType[]> = ref<QuickLinkType[]>([])
+  public links: Ref<QuickLinkType[]> = ref<QuickLinkType[]>([])
 
   private _linksWatcher(newLinks: QuickLinkType[]) {
     console.log('links updated', newLinks)
     const storageLinks = JSON.stringify(newLinks)
     localStorage.setItem('links', storageLinks)
+  }
+
+  public deleteLink(item: QuickLinkType) {
+    this.links.value = this.links.value.filter(
+      (link) => !(link.name == item.name && link.url == item.url),
+    )
   }
 }

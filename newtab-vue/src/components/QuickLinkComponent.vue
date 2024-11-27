@@ -6,6 +6,9 @@ import { ContextMenu, Dialog, Button } from 'primevue'
 import type { MenuItem } from 'primevue/menuitem'
 
 const props = defineProps<{ quickLink: QuickLinkType }>()
+const emit = defineEmits<{
+  (e: 'deleteLink', link: QuickLinkType): void
+}>()
 
 function openLink() {
   const url = props.quickLink.url
@@ -36,11 +39,21 @@ const contextMenuItems: Ref<MenuItem[]> = ref([
 ])
 
 // Confirm Delete Dialog
+const showDeleteDialog: Ref<boolean> = ref(false)
+
 function openDeleteDialog() {
   showDeleteDialog.value = true
 }
 
-const showDeleteDialog: Ref<boolean> = ref(false)
+function confirmDelete() {
+  // Delay so that dialog closing can finish
+  setTimeout(() => emit('deleteLink', props.quickLink), 200)
+  showDeleteDialog.value = false
+}
+
+function cancelDelete() {
+  showDeleteDialog.value = false
+}
 </script>
 
 <template>
@@ -72,8 +85,8 @@ const showDeleteDialog: Ref<boolean> = ref(false)
     </div>
 
     <template #footer>
-      <Button label="Confirm" severity="danger" />
-      <Button label="Cancel" severity="secondary" outlined />
+      <Button label="Confirm" severity="danger" @click="confirmDelete" />
+      <Button label="Cancel" severity="secondary" outlined @click="cancelDelete" />
     </template>
   </Dialog>
 </template>
