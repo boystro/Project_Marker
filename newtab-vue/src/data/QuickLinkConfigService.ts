@@ -20,6 +20,10 @@ export default class QuickLinkConfigService {
     localStorage.setItem('links', storageLinks)
   }
 
+  public addLink(item: QuickLinkType) {
+    this.links.value = [...this.links.value, item]
+  }
+
   public deleteLink(item: QuickLinkType) {
     this.links.value = this.links.value.filter(
       (link) => !(link.name == item.name && link.url == item.url),

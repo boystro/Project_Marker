@@ -16,8 +16,7 @@ function addLink(event: Event) {
     name: linkName.value,
     url: linkUrl.value,
   }
-  if (quickLinkConfigService != null)
-    quickLinkConfigService.links.value = [...quickLinkConfigService.links.value, newLink]
+  if (quickLinkConfigService != null) quickLinkConfigService.addLink(newLink)
 }
 </script>
 
