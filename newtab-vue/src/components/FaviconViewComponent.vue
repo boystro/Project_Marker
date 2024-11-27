@@ -15,8 +15,8 @@ function src() {
 
 <style lang="scss">
 .favicon-view {
-  height: 64px;
-  width: 64px;
+  height: 2em;
+  width: 2em;
   border-radius: var(--p-border-radius-md);
 }
 </style>

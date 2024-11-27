@@ -2,7 +2,7 @@
 import type { QuickLinkType } from '@/types/QuickLinkType'
 import FaviconViewComponent from './FaviconViewComponent.vue'
 import { ref, type Ref } from 'vue'
-import { ContextMenu } from 'primevue'
+import { ContextMenu, Dialog, Button } from 'primevue'
 import type { MenuItem } from 'primevue/menuitem'
 
 const props = defineProps<{ quickLink: QuickLinkType }>()
@@ -31,12 +31,16 @@ const contextMenuItems: Ref<MenuItem[]> = ref([
   {
     label: 'Delete',
     icon: 'pi pi-trash',
-    command: () => (showDeleteDialog.value = true),
+    command: openDeleteDialog,
   },
 ])
 
 // Confirm Delete Dialog
-const showDeleteDialog = ref(false)
+function openDeleteDialog() {
+  showDeleteDialog.value = true
+}
+
+const showDeleteDialog: Ref<boolean> = ref(false)
 </script>
 
 <template>
@@ -47,8 +51,30 @@ const showDeleteDialog = ref(false)
 
   <ContextMenu ref="ctxMenu" :model="contextMenuItems" />
 
-  <Dialog v-model:visible="showDeleteDialog">
-    <template> This is a wonderful dialog </template>
+  <Dialog
+    v-model:visible="showDeleteDialog"
+    modal
+    header="Delete Link"
+    :style="{ width: '25rem' }"
+    :draggable="false"
+  >
+    <div class="d-content">
+      <FaviconViewComponent :url="props.quickLink.url" />
+      <div class="d-text">
+        <div class="d-link-name">
+          {{ props.quickLink.name }}
+        </div>
+
+        <div class="d-link">
+          {{ props.quickLink.url }}
+        </div>
+      </div>
+    </div>
+
+    <template #footer>
+      <Button label="Confirm" severity="danger" />
+      <Button label="Cancel" severity="secondary" outlined />
+    </template>
   </Dialog>
 </template>
 
@@ -56,7 +82,7 @@ const showDeleteDialog = ref(false)
 .link-object {
   text-align: center;
   cursor: pointer;
-  padding: 0.75em 1.5em;
+  padding: 0.75em 1em;
   border-radius: var(--p-border-radius-xl);
   background: transparent;
   transition:
@@ -71,5 +97,22 @@ const showDeleteDialog = ref(false)
 
 .link-name {
   font-size: 0.8em;
+}
+
+.d-content {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.d-link-name {
+  color: var(--p-primary-400);
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.d-link {
+  color: var(--p-surface-500);
+  // font-size: 0.8em;
 }
 </style>

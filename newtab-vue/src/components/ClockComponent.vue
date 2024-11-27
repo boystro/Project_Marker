@@ -5,16 +5,16 @@ import type { DateStyleType, Hour12Type, TimeStyleType } from '@/types/DateTimeF
 import { ContextMenu, Card, Dialog, Select, Button, FloatLabel, Checkbox } from 'primevue'
 import type { MenuItem } from 'primevue/menuitem'
 
-import TimeComponent from './TimeComponent.vue';
-import DateComponent from './DateComponent.vue';
-import DateTimeConfigService from '@/data/DateTimeConfigService';
+import TimeComponent from './TimeComponent.vue'
+import DateComponent from './DateComponent.vue'
+import DateTimeConfigService from '@/data/DateTimeConfigService'
 
 const currentTime: Ref<Date> = ref(new Date())
 
 const dateTimeConfigService = inject<DateTimeConfigService>('dateTimeConfigService')!
 
 onMounted(() => {
-  setInterval(() => currentTime.value = new Date(), 1000)
+  setInterval(() => (currentTime.value = new Date()), 1000)
 })
 
 // Context Menu Controls
@@ -50,8 +50,8 @@ function showEditTimeDialog() {
 }
 
 function saveTimeConfig() {
-  dateTimeConfigService.hour12.value = editHour12.value;
-  dateTimeConfigService.timeStyle.value = editTimeStyle.value;
+  dateTimeConfigService.hour12.value = editHour12.value
+  dateTimeConfigService.timeStyle.value = editTimeStyle.value
   editTimeDialogVisible.value = false
 }
 
@@ -84,7 +84,6 @@ const editValues = ref([
     code: 'medium',
   },
 ])
-
 </script>
 
 <template>
@@ -92,11 +91,17 @@ const editValues = ref([
     <template #content>
       <div class="flex flex-column gap-1">
         <div class="time">
-          <TimeComponent :time="currentTime" :time-style="dateTimeConfigService.timeStyle.value"
-            :hour12="dateTimeConfigService.hour12.value"></TimeComponent>
+          <TimeComponent
+            :time="currentTime"
+            :time-style="dateTimeConfigService.timeStyle.value"
+            :hour12="dateTimeConfigService.hour12.value"
+          ></TimeComponent>
         </div>
         <div class="date">
-          <DateComponent :date="currentTime" :date-style="dateTimeConfigService.dateStyle.value"></DateComponent>
+          <DateComponent
+            :date="currentTime"
+            :date-style="dateTimeConfigService.dateStyle.value"
+          ></DateComponent>
         </div>
       </div>
     </template>
@@ -106,9 +111,13 @@ const editValues = ref([
   <ContextMenu ref="ctxMenu" :model="items" />
 
   <!-- Time Edit Dialog Box -->
-  <Dialog v-model:visible="editTimeDialogVisible" modal header="Edit Time" :style="{ width: '25rem' }"
-    :draggable="false">
-
+  <Dialog
+    v-model:visible="editTimeDialogVisible"
+    modal
+    header="Edit Time"
+    :style="{ width: '25rem' }"
+    :draggable="false"
+  >
     <div class="time">
       <TimeComponent :time="currentTime" :time-style="editTimeStyle" :hour12="editHour12">
       </TimeComponent>
@@ -116,16 +125,22 @@ const editValues = ref([
 
     <template #footer>
       <div class="w-full flex flex-column gap-3">
-
         <div class="flex gap-2 align-items-center">
           <Checkbox input-id="cb-h12" v-model="editHour12" binary></Checkbox>
           <label for="cb-h12">Use 12-Hours Format</label>
         </div>
 
-        <div class="flex  gap-3">
+        <div class="flex gap-3">
           <FloatLabel class="flex-1" variant="in">
-            <Select input-id="select-time-edit" v-model="editTimeStyle" :options="editValues" optionLabel="name"
-              option-value="code" fluid autofocus></Select>
+            <Select
+              input-id="select-time-edit"
+              v-model="editTimeStyle"
+              :options="editValues"
+              optionLabel="name"
+              option-value="code"
+              fluid
+              autofocus
+            ></Select>
             <label for="select-time-edit">Select Time Format</label>
           </FloatLabel>
 
@@ -136,9 +151,13 @@ const editValues = ref([
   </Dialog>
 
   <!-- Dadte Edit Dialog Box -->
-  <Dialog v-model:visible="editDateDialogVisible" modal header="Edit Date" :style="{ width: '25rem' }"
-    :draggable="false">
-
+  <Dialog
+    v-model:visible="editDateDialogVisible"
+    modal
+    header="Edit Date"
+    :style="{ width: '25rem' }"
+    :draggable="false"
+  >
     <div class="date">
       <DateComponent :date="currentTime" :date-style="editDateStyle"></DateComponent>
     </div>
@@ -146,8 +165,15 @@ const editValues = ref([
     <template #footer>
       <div class="flex gap-3 w-full">
         <FloatLabel class="flex-1" variant="in">
-          <Select input-id="select-date-edit" v-model="editDateStyle" :options="editValues" optionLabel="name"
-            option-value="code" fluid autofocus></Select>
+          <Select
+            input-id="select-date-edit"
+            v-model="editDateStyle"
+            :options="editValues"
+            optionLabel="name"
+            option-value="code"
+            fluid
+            autofocus
+          ></Select>
           <label for="select-date-edit">Select Date Format</label>
         </FloatLabel>
         <Button label="Save" icon="pi pi-check" iconPos="right" @click="saveDateConfig"></Button>
