@@ -1,12 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Custom New Tab and Popup Extension",
+  "name": "Project Marker",
   "version": "1.0",
-  "description": "An extension with a popup and a custom new tab page.",
-  "permissions": [
-    "tabs",
-    "bookmarks"
-  ],
+  "description": "Custom New Tab",
+  "permissions": ["tabs", "bookmarks"],
   "chrome_url_overrides": {
     "newtab": "newtab-vue/dist/index.html"
   },
@@ -22,9 +19,5 @@
     "16": "images/icon16.png",
     "48": "images/icon48.png",
     "128": "images/icon128.png"
-  },
-  "background": {
-    "service_worker": "background.js"
-  },
-  "options_page": "options.html"
+  }
 }
